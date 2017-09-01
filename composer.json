@@ -1,5 +1,5 @@
 {
-  "name": "jlab/eloglib",
+  "name": "jlab/eloglib-php",
   "version": "0.0.1",
 
   "require" : {
