@@ -9,16 +9,23 @@ The package requires minimal pre-requisites:
 
 ## Installation
 
-To get the latest version, simply require the project using [Composer](https://getcomposer.org):
+Add the following to your composer.json file:
+
+```
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/JeffersonLab/eloglib-php.git"
+    }
+]
+
+"require" : {
+    "jlab/eloglib-php" : "dev-master"
+}
+```
+Or later once the package is made public, you can get the
+ latest version, simply by requiring the project using [Composer](https://getcomposer.org):
 
 ```bash
 $ composer require jlab/eloglib
-```
-
-or add the following to your composer.json file:
-
-```
-"require" : {
-    "jlab/eloglib" : "dev-master"
-}
 ```
