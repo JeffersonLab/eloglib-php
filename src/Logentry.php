@@ -6,6 +6,7 @@
 namespace Jlab\Eloglib;
 
 use Dotenv\Dotenv;
+use XMLWriter;
 
 /**
  * Class Logentry
@@ -13,6 +14,11 @@ use Dotenv\Dotenv;
  * An electronic log book log entry.
  *
  * @package Jlab\Eloglib
+ *
+ *
+ * Significant changes from Logentry class in elog Drupal module:
+ *   - $body_type renamed to $bodyType
+ *
  */
 class Logentry
 {
@@ -42,21 +48,16 @@ class Logentry
 
     /**
      * The author of the logentry
-     * @var User
+     * @var stdClass
+     */
     protected $author;
-     *
-     * /**
+
+    /**
      * The log entry time
      * Needs to be in ISO 8601 date format (ex: 2004-02-12T15:19:21+00:00)
      * @var string
      */
     protected $created;
-
-    /**
-     * The log entry body
-     * @var string
-     */
-    protected $body;
 
     /**
      * Whether the logentry should be sticky at the top of lists
@@ -65,13 +66,21 @@ class Logentry
     protected $sticky;
 
     /**
-     * The log entry body type
-     * Indicates the formatting of the text in $body.
-     * Valid values correspond to subset of text formats defined in Drupal
-     * (plain_text, filtered_html, full_html, etc.)
+     * The log entry body
      * @var string
      */
-    protected $body_type;
+    protected $body;
+
+
+    /**
+     * Indicates the formatting of the text in $body.
+     *
+     * Valid values will correspond to text formats defined in Drupal
+     *   examples: plain_text, filtered_html, full_html, etc.
+     *
+     * @var string
+     */
+    protected $bodyType;
 
     /**
      * The list of logbooks for the entry
@@ -140,9 +149,9 @@ class Logentry
 
 
     /**
-     * Instantiates a Logentry
+     * Instantiate a Logentry
      *
-     * For maximum flexibility, the constructor can accepts any of
+     * For maximum flexibility, the constructor can accept any of
      * the following arguments:
      *   1) A DOMDocument or DOMElement object in Logentry.xsd format
      *   2) The name of an XML file in Logentry.xsd format
@@ -184,20 +193,6 @@ class Logentry
 
         $this->setConfig(__DIR__, '.env');
     }
-
-    /**
-     * Minimal initialization constructor.
-     *
-     * @param $title
-     * @param $logbooks
-     */
-    protected function constructFromScratch($title, $logbooks)
-    {
-        $this->setTitle($title);
-        $this->setLogbooks($logbooks);
-        $this->setCreated(time());
-    }
-
 
     /**
      * Constructs a Logentry from a Drupal node object.
@@ -340,6 +335,20 @@ class Logentry
     }
 
     /**
+     * Minimal initialization constructor.
+     *
+     * @param $title
+     * @param $logbooks
+     */
+    protected function constructFromScratch($title, $logbooks)
+    {
+        $this->setTitle($title);
+        $this->setLogbooks($logbooks);
+        $this->setCreated(time());
+        $this->setDefaultAuthor();
+    }
+
+    /**
      * Sets the title
      * Limited to 255 characters.
      * @param string $title
@@ -385,7 +394,7 @@ class Logentry
      * Sets the internal timestamp of the entry to be astring in ISO 8601 date format
      *   ex: 2004-02-12T15:19:21+00:00
      *
-     * @param mixed $date date in a format parsable by php strtotime()
+     * @param mixed $date unix integer timestamp or string parsable by php strtotime()
      */
     public function setCreated($date)
     {
@@ -394,6 +403,27 @@ class Logentry
         } else {
             $this->created = date('c', strtotime($date));
         }
+    }
+
+    /**
+     * Defaults the author to the user who owns the current CPU process.
+     */
+    protected function setDefaultAuthor()
+    {
+        $os_user = posix_getpwuid(posix_getuid());
+        $this->setAuthor($os_user['name']);
+    }
+
+    /**
+     * Sets the author.
+     *
+     * @param string $username
+     * @param array $attributes associative array of additional user attributes
+     *
+     */
+    public function setAuthor($username, array $attributes = array())
+    {
+        $this->author = new User($username, $attributes);
     }
 
     /**
@@ -415,9 +445,312 @@ class Logentry
                 $this->config->load();
             }
             // Throws if any required env variables are missing
-            $this->config->required(array('LOG_ENTRY_SCHEMA_URL', 'SUBMIT_URL', 'DEFAULT_UNIX_QUEUE_PATH'));
+            $this->config->required(array(
+                'LOG_ENTRY_SCHEMA_URL',
+                'SUBMIT_URL',
+                'DEFAULT_UNIX_QUEUE_PATH',
+                'EMAIL_DOMAIN'
+            ));
         } catch (\Exception $e) {
             throw new LogRuntimeException($e->getMessage());
+        }
+    }
+
+    /**
+     * Adds an entry maker.
+     *
+     * @param string $username
+     * @param array $attributes associative array of additional user attributes
+     *
+     */
+    public function addEntryMaker($username, array $attributes = array())
+    {
+        $Maker = new User($username, $attributes);
+        $this->entrymakers[$Maker->username] = $Maker;
+    }
+
+    /**
+     * Adds an email adress to notify of the logentry
+     *
+     * @param $email
+     */
+    public function addNotify($email)
+    {
+        if (is_string($email)) {
+            if (!stristr($email, '@')) {
+                $email .= getenv('EMAIL_DOMAIN');
+            }
+            $addr = strtolower($email);
+            $this->notifications[$addr] = $email;
+        }
+    }
+
+    /**
+     * Adds a reference to external data
+     *
+     * @param string $type (lognumber, atlis, etc.)
+     * @param integer $ref (numeric elog_id, task_id, etc.)
+     */
+    public function addReference($type, $ref)
+    {
+        if ($type && $ref) {
+            $key = strtolower($type);
+            $this->references[$key][$ref] = $ref;
+        }
+    }
+
+    /**
+     * Adds a tag from the tags vocabulary
+     *
+     * @param string $tag
+     * @see https://logbooks.jlab.org/tags
+     */
+    public function addTag($tag)
+    {
+        if ($tag) {
+            $key = strtolower($tag);
+            $this->tags[$key] = $tag;
+        }
+    }
+
+    /**
+     * sets the body
+     * @param string $text The content to place in the body
+     * @param string $type Specifies the formatting of text: full_html, filtered_html, plain_text (the default)
+     */
+    public function setBody($text, $type = 'plain_text')
+    {
+        $this->body = $text;
+        $this->bodyType = $type;
+    }
+
+    /**
+     * sets the lognumber
+     *
+     * @param integer $num
+     */
+    public function setLognumber($num)
+    {
+        if (is_numeric($num)) {
+            $this->lognumber = (int)$num;
+        }
+    }
+
+    /**
+     * Adds an attachment from a file.
+     *
+     * Stores it in the object's attachments array as a base64 encoded string.
+     *
+     * @param string $filename
+     * @param string $caption
+     * @param string $type Specify a mime_type (defaults to autodetect)
+     * @throws
+     */
+    public function addAttachment($filename, $caption = '', $type = '')
+    {
+        $this->attachments[] = new FileAttachment($filename, $caption, $type);
+    }
+
+    /**
+     * Adds an attachment as a URL reference.
+     *
+     * @param string $url
+     * @param string $caption
+     * @param string $type mimeType
+     * @throws
+     */
+    public function addAttachmentURL($url, $caption = '', $type = '')
+    {
+        $this->attachments[] = new URLAttachment($url, $caption, $type);
+    }
+
+    /**
+     * Return Logentry object as an XML DOMDocument
+     *
+     * @param string $name A name to use for the DOMElement.
+     *
+     * @return string
+     */
+    function getXML($name = 'Logentry')
+    {
+
+        /* Note that calls to xmlWriter::writeElement seem to implicitly encode
+         * html entitites and so we don't want to call htmlspecialchars ourselves
+         * because that results in double-encoding and is a problem.
+         */
+        $xw = new xmlWriter();
+        $xw->openMemory();
+        $xw->setIndent(true);
+        $xw->startElement($name);
+
+        $this->xmlWriteLognumber($xw);
+        $this->xmlWriteCreated($xw);
+        $this->xmlWriteTitle($xw);
+        $this->xmlWriteAuthor($xw);
+        $this->xmlWriteLogbooks($xw);
+        $this->xmlWriteTags($xw);
+        $this->xmlWriteEntrymakers($xw);
+        $this->xmlWriteBody($xw);
+        $this->xmlWriteNotifications($xw);
+        $this->xmlWriteReferences($xw);
+
+        //Placing attachments at the end make it easier on someone
+        //who might try and read the xml file in a terminal or editor.
+        $this->xmlWriteAttachments($xw);
+
+
+//
+
+//        if ($n == 'comments' && count($this->comments) > 0) {
+//            $xw->startElement('Comments');
+//            //$xw->writeRaw("\n");
+//            foreach ($var as $comment) {
+//                if (method_exists($comment, 'getXML')) {
+//                    $xw->writeRaw($comment->getXML());
+//                }
+//            }
+//            $xw->endElement();
+//            continue;
+//        }
+//        if ($n == 'opspr_events' && count($this->opspr_events) > 0) {
+//            $xw->startElement('OPSPREvents');
+//            foreach ($this->opspr_events as $pr_event) {
+//                $xw->startElement('OPSPREvent');
+//                foreach (get_object_vars($pr_event) as $mprop => $mval) {
+//                    $xw->writeElement($mprop, $mval);
+//                }
+//                $xw->endElement();
+//            }
+//            $xw->endElement();
+//            continue;
+//        }
+//        if ($n == 'downtime' && !empty($this->downtime)) {
+//            $xw->startElement('Downtime');
+//            foreach ($this->downtime as $key => $value) {
+//                $xw->writeElement($key, $value);
+//            }
+//            $xw->endElement();
+//            continue;
+//        }
+
+//        if ($n == 'pr' && is_a($this->pr, 'ElogPR')) {
+//            $xw->writeRaw($this->pr->getXML());
+//        }
+
+        $xw->endElement();
+        return $xw->outputMemory(true);
+    }
+
+
+    protected function xmlWriteLognumber(xmlWriter $xw)
+    {
+        if ($this->lognumber){
+            $xw->writeElement('lognumber', $this->lognumber);
+        }
+    }
+
+    protected function xmlWriteTitle(xmlWriter $xw)
+    {
+        $xw->writeElement('title', $this->title);
+    }
+
+    protected function xmlWriteCreated(xmlWriter $xw)
+    {
+        $xw->writeElement('created', $this->created);
+    }
+
+
+    protected function xmlWriteAuthor(xmlWriter $xw)
+    {
+        $xw->writeRaw($this->author->getXML('Author'));
+    }
+
+    protected function xmlWriteLogbooks(xmlWriter $xw)
+    {
+        $xw->startElement('Logbooks');
+        foreach ($this->logbooks as $logbook) {
+            $xw->writeElement('logbook', $logbook);
+        }
+        $xw->endElement();
+    }
+
+    protected function xmlWriteTags(xmlWriter $xw)
+    {
+        if (count($this->tags) > 0) {
+            $xw->startElement('Tags');
+            foreach ($this->tags as $tag) {
+                $xw->writeElement('tag', $tag);
+            }
+            $xw->endElement();
+        }
+    }
+
+    protected function xmlWriteEntrymakers(xmlWriter $xw)
+    {
+        if (count($this->entrymakers) > 0) {
+            $xw->startElement('Entrymakers');
+            foreach ($this->entrymakers as $maker) {
+                $xw->writeRaw($maker->getXML('Entrymaker'));
+            }
+            $xw->endElement();
+        }
+    }
+
+    protected function xmlWriteBody(xmlWriter $xw)
+    {
+        if ($this->body != '') {
+            $xw->startElement('body');
+            switch ($this->bodyType) {
+                case 'elog_text' :          //Really was HTML
+                case 'text/html' :
+                case 'html' :
+                case 'trusted_html' :
+                case 'full_html' :
+                    $body_type = 'html';
+                    break;
+                default :
+                    $body_type = 'text';
+            }
+            $xw->writeAttribute('type', $body_type);
+            $xw->writeCData($this->body);
+            $xw->endElement();
+        }
+    }
+
+    protected function xmlWriteNotifications(xmlWriter $xw)
+    {
+        if (count($this->notifications) > 0) {
+            $xw->startElement('Notifications');
+            foreach ($this->notifications as $email) {
+                $xw->writeElement('email', $email);
+            }
+            $xw->endElement();
+        }
+    }
+
+    protected function xmlWriteReferences(xmlWriter $xw)
+    {
+        if (count($this->references) > 0) {
+            $xw->startElement('References');
+            foreach ($this->references as $type => $ref) {
+                foreach ($ref as $r) {
+                    $xw->startElement('reference');
+                    $xw->writeAttribute('type', $type);
+                    $xw->text($r);
+                    $xw->endElement();
+                }
+            }
+            $xw->endElement();
+        }
+    }
+
+    protected function xmlWriteAttachments(xmlWriter $xw){
+        if (count($this->attachments) > 0) {
+            $xw->startElement('Attachments');
+            foreach ($this->attachments as $attachment) {
+                $xw->writeRaw($attachment->getXML('Attachment'));
+            }
+            $xw->endElement();
         }
     }
 

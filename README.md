@@ -29,3 +29,6 @@ Or later once the package is made public, you can get the
 ```bash
 $ composer require jlab/eloglib
 ```
+
+## API Reference
+Is available:  [API Reference](https://jeffersonlab.github.io/eloglib-php/) 

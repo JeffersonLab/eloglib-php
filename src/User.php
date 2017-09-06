@@ -8,6 +8,8 @@
 
 namespace Jlab\Eloglib;
 
+use XMLWriter;
+
 /**
  * Class User
  *
@@ -42,8 +44,10 @@ class User
     function __construct($username, array $attributes = array())
     {
         $this->setUsername($username);
-        foreach ($attributes as $key => $val){
-            if (! $this->setProperty($key, $val)){
+
+        unset($attributes['username']);  //ensure no clobbering of $username
+        foreach ($attributes as $key => $val) {
+            if (!$this->setProperty($key, $val)) {
                 throw new UserException('Invalid attribute passed to User constructor');
             }
         }
@@ -54,39 +58,14 @@ class User
      * @param string $username
      * @throws UserException
      */
-    function setUsername($username){
-        if (strlen($username) <= 60){     //Drupal users table limit
+    function setUsername($username)
+    {
+        if (strlen($username) <= 60) {     //Drupal users table limit
             $this->username = $username;
-        }else{
+        } else {
             throw new UserException('Username exceeds character limit');
         }
     }
-
-    /**
-     * @param string $firstname
-     * @throws UserException
-     */
-    function setFirstname($firstname){
-        if (strlen($firstname) <= 255){     //Drupal field_data_field_first_name table limit
-            $this->firstname = $firstname;
-        }else{
-            throw new UserException('First name  exceeds character limit');
-        }
-    }
-
-
-    /**
-     * @param string $lastname
-     * @throws UserException
-     */
-    function setLastname($lastname){
-        if (strlen($lastname) <= 255){     //Drupal field_data_field_last_name table limit
-            $this->lastname = $lastname;
-        }else{
-            throw new UserException('Last name  exceeds character limit');
-        }
-    }
-
 
     /**
      * Attempts to set the named object property.
@@ -97,7 +76,8 @@ class User
      * @param mixed $val
      * @return bool
      */
-    protected function setProperty($var, $val){
+    protected function setProperty($var, $val)
+    {
         if (property_exists($this, $var)) {
             $setterFunction = 'set' . ucfirst($var);
             if (method_exists($this, $setterFunction)) {
@@ -111,26 +91,30 @@ class User
     }
 
     /**
-     * Magic method intercepts setting of class properties.
-     *
-     * @param string $var
-     * @param mixed $val
-     * @return bool
+     * @param string $firstname
+     * @throws UserException
      */
-    function __set($var, $val)
+    function setFirstname($firstname)
     {
-        if ($this->setProperty($var, $val)){
-            return true;
+        if (strlen($firstname) <= 255) {     //Drupal field_data_field_first_name table limit
+            $this->firstname = $firstname;
+        } else {
+            throw new UserException('First name  exceeds character limit');
         }
-
-        $trace = debug_backtrace();
-        trigger_error(
-            'Undefined property via __set(): ' . $var .
-            ' in ' . $trace[0]['file'] .
-            ' on line ' . $trace[0]['line'], E_USER_NOTICE);
-        return false;
     }
 
+    /**
+     * @param string $lastname
+     * @throws UserException
+     */
+    function setLastname($lastname)
+    {
+        if (strlen($lastname) <= 255) {     //Drupal field_data_field_last_name table limit
+            $this->lastname = $lastname;
+        } else {
+            throw new UserException('Last name  exceeds character limit');
+        }
+    }
 
     /**
      * Magic method allows controlled access to class properties.
@@ -152,5 +136,52 @@ class User
         return null;
     }
 
+    /**
+     * Magic method intercepts setting of class properties.
+     *
+     * @param string $var
+     * @param mixed $val
+     * @return bool
+     */
+    function __set($var, $val)
+    {
+        if ($this->setProperty($var, $val)) {
+            return true;
+        }
 
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined property via __set(): ' . $var .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'], E_USER_NOTICE);
+        return false;
+    }
+
+    /**
+     * Return User object as an XML DOMDocument
+     *
+     * @param string $name A name to use for the DOMElement.
+     *
+     * @return string
+     */
+    function getXML($name = 'User')
+    {
+        $xw = new xmlWriter();
+        $xw->openMemory();
+        $xw->setIndent(true);
+        $xw->startElement($name);
+        $xw->writeElement('username', $this->username);
+
+        if ($this->firstname){
+            $xw->writeElement('firstname', $this->firstname);
+        }
+
+        if ($this->lastname) {
+            $xw->writeElement('lastname', $this->lastname);
+        }
+
+        $xw->endElement();
+        return $xw->outputMemory(true);
+
+    }
 }
