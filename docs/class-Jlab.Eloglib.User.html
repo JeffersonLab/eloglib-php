@@ -39,7 +39,10 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Jlab.Eloglib.Attachment.html">Attachment</a></li>
+				<li><a href="class-Jlab.Eloglib.FileAttachment.html">FileAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.Logentry.html">Logentry</a></li>
+				<li><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></li>
 				<li class="active"><a href="class-Jlab.Eloglib.User.html">User</a></li>
 			</ul>
 
@@ -47,6 +50,7 @@
 
 			<h3>Exceptions</h3>
 			<ul>
+				<li><a href="class-Jlab.Eloglib.IOException.html">IOException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogRuntimeException.html">LogRuntimeException</a></li>
 				<li><a href="class-Jlab.Eloglib.UserException.html">UserException</a></li>
@@ -106,7 +110,7 @@
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.User.html#11-156" title="Go to source code">User.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.User.html#13-187" title="Go to source code">User.php</a>
 		<br>
 	</div>
 
@@ -126,7 +130,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#36-50" title="Go to source code">__construct</a>( <span>string <var>$username</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.User.html#38-54" title="Go to source code">__construct</a>( <span>string <var>$username</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>User constructor.</p>
@@ -167,7 +171,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setUsername">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#53-63" title="Go to source code">setUsername</a>( <span>string <var>$username</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.User.html#57-68" title="Go to source code">setUsername</a>( <span>string <var>$username</var></span> )</code>
 
 		<div class="description short">
 			
@@ -194,6 +198,49 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="setProperty" id="_setProperty">
+
+		<td class="attributes"><code>
+			 protected 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setProperty">#</a>
+		<code><a href="source-class-Jlab.Eloglib.User.html#70-91" title="Go to source code">setProperty</a>( <span>string <var>$var</var></span>, <span>mixed <var>$val</var></span> )</code>
+
+		<div class="description short">
+			<p>Attempts to set the named object property.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Attempts to set the named object property.</p>
+
+<p>Returns true if the property exists to be set, false otherwise.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$val</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="setFirstname" id="_setFirstname">
 
 		<td class="attributes"><code>
@@ -206,7 +253,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setFirstname">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#65-75" title="Go to source code">setFirstname</a>( <span>string <var>$firstname</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.User.html#93-104" title="Go to source code">setFirstname</a>( <span>string <var>$firstname</var></span> )</code>
 
 		<div class="description short">
 			
@@ -245,7 +292,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setLastname">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#78-88" title="Go to source code">setLastname</a>( <span>string <var>$lastname</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.User.html#106-117" title="Go to source code">setLastname</a>( <span>string <var>$lastname</var></span> )</code>
 
 		<div class="description short">
 			
@@ -272,41 +319,37 @@
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="setProperty" id="_setProperty">
+	<tr data-order="__get" id="___get">
 
 		<td class="attributes"><code>
-			 protected 
+			 public 
 
-			boolean
+			mixed
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_setProperty">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#91-111" title="Go to source code">setProperty</a>( <span>string <var>$var</var></span>, <span>mixed <var>$val</var></span> )</code>
+		<a class="anchor" href="#___get">#</a>
+		<code><a href="source-class-Jlab.Eloglib.User.html#119-137" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
 
 		<div class="description short">
-			<p>Attempts to set the named object property.</p>
+			<p>Magic method allows controlled access to class properties.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Attempts to set the named object property.</p>
-
-<p>Returns true if the property exists to be set, false otherwise.</p>
+			<p>Magic method allows controlled access to class properties.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$var</var></dt>
 					<dd></dd>
-					<dt><var>$val</var></dt>
-					<dd></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					boolean
+					mixed
 				</div>
 
 
@@ -327,7 +370,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___set">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#113-132" title="Go to source code">__set</a>( <span>string <var>$var</var></span>, <span>mixed <var>$val</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.User.html#139-158" title="Go to source code">__set</a>( <span>string <var>$var</var></span>, <span>mixed <var>$val</var></span> )</code>
 
 		<div class="description short">
 			<p>Magic method intercepts setting of class properties.</p>
@@ -356,37 +399,37 @@
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="__get" id="___get">
+	<tr data-order="getXML" id="_getXML">
 
 		<td class="attributes"><code>
 			 public 
 
-			mixed
+			string
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#___get">#</a>
-		<code><a href="source-class-Jlab.Eloglib.User.html#135-153" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
+		<a class="anchor" href="#_getXML">#</a>
+		<code><a href="source-class-Jlab.Eloglib.User.html#160-186" title="Go to source code">getXML</a>( <span>string <var>$name</var> = <span class="php-quote">'User'</span></span> )</code>
 
 		<div class="description short">
-			<p>Magic method allows controlled access to class properties.</p>
+			<p>Return User object as an XML DOMDocument</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Magic method allows controlled access to class properties.</p>
+			<p>Return User object as an XML DOMDocument</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$var</var></dt>
-					<dd></dd>
+					<dt><var>$name</var></dt>
+					<dd>A name to use for the DOMElement.</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					mixed
+					string
 				</div>
 
 
@@ -417,7 +460,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.User.html#18-21" title="Go to source code"><var>$username</var></a>
+				<a href="source-class-Jlab.Eloglib.User.html#20-23" title="Go to source code"><var>$username</var></a>
 
 			<div class="description short">
 				
@@ -442,7 +485,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.User.html#23-26" title="Go to source code"><var>$firstname</var></a>
+				<a href="source-class-Jlab.Eloglib.User.html#25-28" title="Go to source code"><var>$firstname</var></a>
 
 			<div class="description short">
 				
@@ -467,7 +510,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.User.html#29-33" title="Go to source code"><var>$lastname</var></a>
+				<a href="source-class-Jlab.Eloglib.User.html#31-35" title="Go to source code"><var>$lastname</var></a>
 
 			<div class="description short">
 				<p>username</p>

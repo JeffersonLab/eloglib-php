@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class Jlab\Eloglib\LogentryException</title>
+	<title>Class Jlab\Eloglib\URLAttachment</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -42,7 +42,7 @@
 				<li><a href="class-Jlab.Eloglib.Attachment.html">Attachment</a></li>
 				<li><a href="class-Jlab.Eloglib.FileAttachment.html">FileAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.Logentry.html">Logentry</a></li>
-				<li><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></li>
+				<li class="active"><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.User.html">User</a></li>
 			</ul>
 
@@ -51,7 +51,7 @@
 			<h3>Exceptions</h3>
 			<ul>
 				<li><a href="class-Jlab.Eloglib.IOException.html">IOException</a></li>
-				<li class="active"><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></li>
+				<li><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogRuntimeException.html">LogRuntimeException</a></li>
 				<li><a href="class-Jlab.Eloglib.UserException.html">UserException</a></li>
 			</ul>
@@ -89,24 +89,23 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class LogentryException</h1>
+	<h1>Class URLAttachment</h1>
 
 
 	<div class="description">
-	<p>Config</p>
+	<p>Class Attachment</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-Exception
-			 implements 
-<span>Throwable</span>
+			<a href="class-Jlab.Eloglib.Attachment.html"><span>Jlab\Eloglib\Attachment</span></a>
+			
 			
 			
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>Jlab\Eloglib\LogentryException</span></b>			
+<b><span>Jlab\Eloglib\URLAttachment</span></b>			
 			
 			
 		</dd>
@@ -125,27 +124,63 @@ Exception
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.LogentryException.html#10-18" title="Go to source code">LogentryException.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.URLAttachment.html#12-34" title="Go to source code">URLAttachment.php</a>
 		<br>
 	</div>
 
 
 
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Jlab.Eloglib.URLAttachment.html#16-31" title="Go to source code">__construct</a>( <span>string <var>$url</var></span>, <span>string <var>$caption</var> = <span class="php-quote">''</span></span>, <span>string <var>$type</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd>resource address</dd>
+					<dt><var>$caption</var></dt>
+					<dd>text description of attachment</dd>
+					<dt><var>$type</var></dt>
+					<dd>explicitly specify mime-type</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 	<table class="summary inherited">
-	<caption>Methods inherited from Exception</caption>
+	<caption>Methods inherited from <a href="class-Jlab.Eloglib.Attachment.html#methods">Jlab\Eloglib\Attachment</a></caption>
 	<tr>
 		<td><code>
-__construct(), 
-__toString(), 
-__wakeup(), 
-getCode(), 
-getFile(), 
-getLine(), 
-getMessage(), 
-getPrevious(), 
-getTrace(), 
-getTraceAsString()
+			<a href="class-Jlab.Eloglib.Attachment.html#___get">__get()</a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#_getCaption">getCaption()</a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#_getXML">getXML()</a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#_xmlWriteData">xmlWriteData()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -162,13 +197,13 @@ getTraceAsString()
 
 
 	<table class="summary inherited">
-	<caption>Properties inherited from Exception</caption>
+	<caption>Properties inherited from <a href="class-Jlab.Eloglib.Attachment.html#properties">Jlab\Eloglib\Attachment</a></caption>
 	<tr>
 		<td><code>
-<var>$code</var>, 
-<var>$file</var>, 
-<var>$line</var>, 
-<var>$message</var>
+			<a href="class-Jlab.Eloglib.Attachment.html#$caption"><var>$caption</var></a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#$data"><var>$data</var></a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#$encoding"><var>$encoding</var></a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#$type"><var>$type</var></a>
 		</code></td>
 	</tr>
 	</table>

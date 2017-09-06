@@ -39,7 +39,10 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Jlab.Eloglib.Attachment.html">Attachment</a></li>
+				<li><a href="class-Jlab.Eloglib.FileAttachment.html">FileAttachment</a></li>
 				<li class="active"><a href="class-Jlab.Eloglib.Logentry.html">Logentry</a></li>
+				<li><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.User.html">User</a></li>
 			</ul>
 
@@ -47,6 +50,7 @@
 
 			<h3>Exceptions</h3>
 			<ul>
+				<li><a href="class-Jlab.Eloglib.IOException.html">IOException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogRuntimeException.html">LogRuntimeException</a></li>
 				<li><a href="class-Jlab.Eloglib.UserException.html">UserException</a></li>
@@ -108,7 +112,7 @@
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Logentry.html#10-445" title="Go to source code">Logentry.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Logentry.html#11-778" title="Go to source code">Logentry.php</a>
 		<br>
 	</div>
 
@@ -128,16 +132,16 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#142-186" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#151-195" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
-			<p>Instantiates a Logentry</p>
+			<p>Instantiate a Logentry</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Instantiates a Logentry</p>
+			<p>Instantiate a Logentry</p>
 
-<p>For maximum flexibility, the constructor can accepts any of
+<p>For maximum flexibility, the constructor can accept any of
 the following arguments: 1) A DOMDocument or DOMElement object in Logentry.xsd format 2) The name of an XML file in Logentry.xsd format 3) A title and the name of a logbook (e.g. ELOG, TLOG, etc.) 4) A title and an array of logbook names 5) A StdClass object with Drupal 7 node fields and elog module fields</p>
 
 
@@ -149,43 +153,6 @@ the following arguments: 1) A DOMDocument or DOMElement object in Logentry.xsd f
 						https://logbooks.jlab.org/schema/Logentry.xsd<br>
 						https://github.com/JeffersonLab/elog<br>
 				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="constructFromScratch" id="_constructFromScratch">
-
-		<td class="attributes"><code>
-			 protected 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_constructFromScratch">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#188-199" title="Go to source code">constructFromScratch</a>( <span> <var>$title</var></span>, <span> <var>$logbooks</var></span> )</code>
-
-		<div class="description short">
-			<p>Minimal initialization constructor.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Minimal initialization constructor.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$title</var></dt>
-					<dd></dd>
-					<dt><var>$logbooks</var></dt>
-					<dd></dd>
-				</dl></div>
-
-
-
 
 
 		</div>
@@ -203,7 +170,7 @@ the following arguments: 1) A DOMDocument or DOMElement object in Logentry.xsd f
 
 		<td class="name"><div>
 		<a class="anchor" href="#_constructFromNode">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#202-340" title="Go to source code">constructFromNode</a>( <span>type <var>$node</var></span>, <span> <var>$att_encode</var> = <span class="php-quote">'url'</span></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#197-335" title="Go to source code">constructFromNode</a>( <span>type <var>$node</var></span>, <span> <var>$att_encode</var> = <span class="php-quote">'url'</span></span> )</code>
 
 		<div class="description short">
 			<p>Constructs a Logentry from a Drupal node object.</p>
@@ -228,6 +195,43 @@ the following arguments: 1) A DOMDocument or DOMElement object in Logentry.xsd f
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="constructFromScratch" id="_constructFromScratch">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_constructFromScratch">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#337-349" title="Go to source code">constructFromScratch</a>( <span> <var>$title</var></span>, <span> <var>$logbooks</var></span> )</code>
+
+		<div class="description short">
+			<p>Minimal initialization constructor.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Minimal initialization constructor.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$title</var></dt>
+					<dd></dd>
+					<dt><var>$logbooks</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="setTitle" id="_setTitle">
 
 		<td class="attributes"><code>
@@ -240,7 +244,7 @@ the following arguments: 1) A DOMDocument or DOMElement object in Logentry.xsd f
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setTitle">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#342-355" title="Go to source code">setTitle</a>( <span>string <var>$title</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#351-364" title="Go to source code">setTitle</a>( <span>string <var>$title</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the title
@@ -281,7 +285,7 @@ Limited to 255 characters.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setLogbooks">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#357-370" title="Go to source code">setLogbooks</a>( <span>mixed <var>$logbooks</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#366-379" title="Go to source code">setLogbooks</a>( <span>mixed <var>$logbooks</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the logbook(s) to which entry belongs</p>
@@ -320,7 +324,7 @@ Limited to 255 characters.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addLogbook">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#372-382" title="Go to source code">addLogbook</a>( <span>string <var>$logbook</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#381-391" title="Go to source code">addLogbook</a>( <span>string <var>$logbook</var></span> )</code>
 
 		<div class="description short">
 			<p>Adds a logbook association</p>
@@ -359,7 +363,7 @@ Limited to 255 characters.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCreated">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#384-397" title="Go to source code">setCreated</a>( <span>mixed <var>$date</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#393-406" title="Go to source code">setCreated</a>( <span>mixed <var>$date</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the internal timestamp of the entry to be astring in ISO 8601 date format
@@ -373,7 +377,74 @@ Limited to 255 characters.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$date</var></dt>
-					<dd>date in a format parsable by php strtotime()</dd>
+					<dd>unix integer timestamp or string parsable by php strtotime()</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDefaultAuthor" id="_setDefaultAuthor">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDefaultAuthor">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#408-415" title="Go to source code">setDefaultAuthor</a>( )</code>
+
+		<div class="description short">
+			<p>Defaults the author to the user who owns the current CPU process.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Defaults the author to the user who owns the current CPU process.</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAuthor" id="_setAuthor">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAuthor">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#417-427" title="Go to source code">setAuthor</a>( <span>string <var>$username</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Sets the author.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the author.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$username</var></dt>
+					<dd></dd>
+					<dt><var>$attributes</var></dt>
+					<dd>associative array of additional user attributes</dd>
 				</dl></div>
 
 
@@ -395,7 +466,7 @@ Limited to 255 characters.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setConfig">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#399-422" title="Go to source code">setConfig</a>( <span>string <var>$dir</var></span>, <span>string <var>$file</var></span>, <span>boolean <var>$overload</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#429-457" title="Go to source code">setConfig</a>( <span>string <var>$dir</var></span>, <span>string <var>$file</var></span>, <span>boolean <var>$overload</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Loads configuration from a .env file.
@@ -428,6 +499,683 @@ Defaults to the .env file included with the package.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="addEntryMaker" id="_addEntryMaker">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addEntryMaker">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#459-470" title="Go to source code">addEntryMaker</a>( <span>string <var>$username</var></span>, <span>array <var>$attributes</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Adds an entry maker.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds an entry maker.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$username</var></dt>
+					<dd></dd>
+					<dt><var>$attributes</var></dt>
+					<dd>associative array of additional user attributes</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addNotify" id="_addNotify">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addNotify">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#472-486" title="Go to source code">addNotify</a>( <span> <var>$email</var></span> )</code>
+
+		<div class="description short">
+			<p>Adds an email adress to notify of the logentry</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds an email adress to notify of the logentry</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$email</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addReference" id="_addReference">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addReference">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#488-500" title="Go to source code">addReference</a>( <span>string <var>$type</var></span>, <span>integer <var>$ref</var></span> )</code>
+
+		<div class="description short">
+			<p>Adds a reference to external data</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds a reference to external data</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd>(lognumber, atlis, etc.)</dd>
+					<dt><var>$ref</var></dt>
+					<dd>(numeric elog_id, task_id, etc.)</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addTag" id="_addTag">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addTag">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#502-514" title="Go to source code">addTag</a>( <span>string <var>$tag</var></span> )</code>
+
+		<div class="description short">
+			<p>Adds a tag from the tags vocabulary</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds a tag from the tags vocabulary</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$tag</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+				<h4>See</h4>
+				<div class="list">
+						https://logbooks.jlab.org/tags<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setBody" id="_setBody">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBody">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#516-525" title="Go to source code">setBody</a>( <span>string <var>$text</var></span>, <span>string <var>$type</var> = <span class="php-quote">'plain_text'</span></span> )</code>
+
+		<div class="description short">
+			<p>sets the body</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>sets the body</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$text</var></dt>
+					<dd>The content to place in the body</dd>
+					<dt><var>$type</var></dt>
+					<dd>Specifies the formatting of text: full_html, filtered_html, plain_text (the default)</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLognumber" id="_setLognumber">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLognumber">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#527-537" title="Go to source code">setLognumber</a>( <span>integer <var>$num</var></span> )</code>
+
+		<div class="description short">
+			<p>sets the lognumber</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>sets the lognumber</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$num</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addAttachment" id="_addAttachment">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addAttachment">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#539-552" title="Go to source code">addAttachment</a>( <span>string <var>$filename</var></span>, <span>string <var>$caption</var> = <span class="php-quote">''</span></span>, <span>string <var>$type</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Adds an attachment from a file.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds an attachment from a file.</p>
+
+<p>Stores it in the object's attachments array as a base64 encoded string.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd></dd>
+					<dt><var>$caption</var></dt>
+					<dd></dd>
+					<dt><var>$type</var></dt>
+					<dd>Specify a mime_type (defaults to autodetect)</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addAttachmentURL" id="_addAttachmentURL">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addAttachmentURL">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#554-565" title="Go to source code">addAttachmentURL</a>( <span>string <var>$url</var></span>, <span>string <var>$caption</var> = <span class="php-quote">''</span></span>, <span>string <var>$type</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Adds an attachment as a URL reference.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds an attachment as a URL reference.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd></dd>
+					<dt><var>$caption</var></dt>
+					<dd></dd>
+					<dt><var>$type</var></dt>
+					<dd>mimeType</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getXML" id="_getXML">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getXML">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#567-642" title="Go to source code">getXML</a>( <span>string <var>$name</var> = <span class="php-quote">'Logentry'</span></span> )</code>
+
+		<div class="description short">
+			<p>Return Logentry object as an XML DOMDocument</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return Logentry object as an XML DOMDocument</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>A name to use for the DOMElement.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteLognumber" id="_xmlWriteLognumber">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteLognumber">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#645-650" title="Go to source code">xmlWriteLognumber</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteTitle" id="_xmlWriteTitle">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteTitle">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#652-655" title="Go to source code">xmlWriteTitle</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteCreated" id="_xmlWriteCreated">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteCreated">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#657-660" title="Go to source code">xmlWriteCreated</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteAuthor" id="_xmlWriteAuthor">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteAuthor">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#663-666" title="Go to source code">xmlWriteAuthor</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteLogbooks" id="_xmlWriteLogbooks">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteLogbooks">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#668-675" title="Go to source code">xmlWriteLogbooks</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteTags" id="_xmlWriteTags">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteTags">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#677-686" title="Go to source code">xmlWriteTags</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteEntrymakers" id="_xmlWriteEntrymakers">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteEntrymakers">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#688-697" title="Go to source code">xmlWriteEntrymakers</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteBody" id="_xmlWriteBody">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteBody">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#699-718" title="Go to source code">xmlWriteBody</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteNotifications" id="_xmlWriteNotifications">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteNotifications">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#720-729" title="Go to source code">xmlWriteNotifications</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteReferences" id="_xmlWriteReferences">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteReferences">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#731-745" title="Go to source code">xmlWriteReferences</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="xmlWriteAttachments" id="_xmlWriteAttachments">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteAttachments">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#747-755" title="Go to source code">xmlWriteAttachments</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="__get" id="___get">
 
 		<td class="attributes"><code>
@@ -440,7 +1188,7 @@ Defaults to the .env file included with the package.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___get">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#424-442" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#757-775" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
 
 		<div class="description short">
 			<p>Magic method allows controlled access to class properties.</p>
@@ -489,7 +1237,7 @@ Defaults to the .env file included with the package.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#20-23" title="Go to source code"><var>$config</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#26-29" title="Go to source code"><var>$config</var></a>
 
 			<div class="description short">
 				
@@ -514,7 +1262,7 @@ Defaults to the .env file included with the package.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#26-34" title="Go to source code"><var>$lognumber</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#32-40" title="Go to source code"><var>$lognumber</var></a>
 
 			<div class="description short">
 				<p>The log number</p>
@@ -542,7 +1290,7 @@ from the logbook server.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#36-41" title="Go to source code"><var>$title</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#42-47" title="Go to source code"><var>$title</var></a>
 
 			<div class="description short">
 				<p>The log entry title.
@@ -562,14 +1310,14 @@ from the logbook server.</p>
 			</div>
 		</td>
 	</tr>
-	<tr data-order="created" id="$created">
+	<tr data-order="author" id="$author">
 		<td class="attributes"><code>
 			protected  
-			<code><a href="class-Jlab.Eloglib.User.html">Jlab\Eloglib\User</a></code>
+			stdClass
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#43-53" title="Go to source code"><var>$created</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#49-53" title="Go to source code"><var>$author</var></a>
 
 			<div class="description short">
 				<p>The author of the logentry</p>
@@ -582,32 +1330,34 @@ from the logbook server.</p>
 		</td>
 		<td class="value">
 			<div>
-				<a href="#$created" class="anchor">#</a>
+				<a href="#$author" class="anchor">#</a>
 				<code></code>
 			</div>
 		</td>
 	</tr>
-	<tr data-order="body" id="$body">
+	<tr data-order="created" id="$created">
 		<td class="attributes"><code>
 			protected  
 			string
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#55-59" title="Go to source code"><var>$body</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#55-60" title="Go to source code"><var>$created</var></a>
 
 			<div class="description short">
-				<p>The log entry body</p>
+				<p>The log entry time
+Needs to be in ISO 8601 date format (ex: 2004-02-12T15:19:21+00:00)</p>
 			</div>
 
 			<div class="description detailed hidden">
-				<p>The log entry body</p>
+				<p>The log entry time
+Needs to be in ISO 8601 date format (ex: 2004-02-12T15:19:21+00:00)</p>
 
 			</div>
 		</td>
 		<td class="value">
 			<div>
-				<a href="#$body" class="anchor">#</a>
+				<a href="#$created" class="anchor">#</a>
 				<code></code>
 			</div>
 		</td>
@@ -619,7 +1369,7 @@ from the logbook server.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#61-65" title="Go to source code"><var>$sticky</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#62-66" title="Go to source code"><var>$sticky</var></a>
 
 			<div class="description short">
 				<p>Whether the logentry should be sticky at the top of lists</p>
@@ -637,33 +1387,54 @@ from the logbook server.</p>
 			</div>
 		</td>
 	</tr>
-	<tr data-order="body_type" id="$body_type">
+	<tr data-order="body" id="$body">
 		<td class="attributes"><code>
 			protected  
 			string
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#67-74" title="Go to source code"><var>$body_type</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#68-72" title="Go to source code"><var>$body</var></a>
 
 			<div class="description short">
-				<p>The log entry body type
-Indicates the formatting of the text in $body.
-Valid values correspond to subset of text formats defined in Drupal
-(plain_text, filtered_html, full_html, etc.)</p>
+				<p>The log entry body</p>
 			</div>
 
 			<div class="description detailed hidden">
-				<p>The log entry body type
-Indicates the formatting of the text in $body.
-Valid values correspond to subset of text formats defined in Drupal
-(plain_text, filtered_html, full_html, etc.)</p>
+				<p>The log entry body</p>
 
 			</div>
 		</td>
 		<td class="value">
 			<div>
-				<a href="#$body_type" class="anchor">#</a>
+				<a href="#$body" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="bodyType" id="$bodyType">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Jlab.Eloglib.Logentry.html#75-83" title="Go to source code"><var>$bodyType</var></a>
+
+			<div class="description short">
+				<p>Indicates the formatting of the text in $body.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Indicates the formatting of the text in $body.</p>
+
+<p>Valid values will correspond to text formats defined in Drupal examples: plain_text, filtered_html, full_html, etc.</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$bodyType" class="anchor">#</a>
 				<code></code>
 			</div>
 		</td>
@@ -675,7 +1446,7 @@ Valid values correspond to subset of text formats defined in Drupal
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#76-80" title="Go to source code"><var>$logbooks</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#85-89" title="Go to source code"><var>$logbooks</var></a>
 
 			<div class="description short">
 				<p>The list of logbooks for the entry</p>
@@ -700,7 +1471,7 @@ Valid values correspond to subset of text formats defined in Drupal
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#82-86" title="Go to source code"><var>$attachments</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#91-95" title="Go to source code"><var>$attachments</var></a>
 
 			<div class="description short">
 				<p>The list of attachments for the entry</p>
@@ -725,7 +1496,7 @@ Valid values correspond to subset of text formats defined in Drupal
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#88-92" title="Go to source code"><var>$entrymakers</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#97-101" title="Go to source code"><var>$entrymakers</var></a>
 
 			<div class="description short">
 				<p>The list of users credited with making the entry</p>
@@ -750,7 +1521,7 @@ Valid values correspond to subset of text formats defined in Drupal
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#94-99" title="Go to source code"><var>$tags</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#103-108" title="Go to source code"><var>$tags</var></a>
 
 			<div class="description short">
 				<p>The list of tags associated with the log entry.
@@ -777,7 +1548,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#101-105" title="Go to source code"><var>$opspr_events</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#110-114" title="Go to source code"><var>$opspr_events</var></a>
 
 			<div class="description short">
 				<p>The possible list of opspr events</p>
@@ -802,7 +1573,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#107-110" title="Go to source code"><var>$pr</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#116-119" title="Go to source code"><var>$pr</var></a>
 
 			<div class="description short">
 				<p>The object that holds fields of a new-style ProblemReport (PR)</p>
@@ -827,7 +1598,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#112-116" title="Go to source code"><var>$downtime</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#121-125" title="Go to source code"><var>$downtime</var></a>
 
 			<div class="description short">
 				<p>The possible downtime fields</p>
@@ -852,7 +1623,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#118-122" title="Go to source code"><var>$references</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#127-131" title="Go to source code"><var>$references</var></a>
 
 			<div class="description short">
 				<p>References to external databases</p>
@@ -877,7 +1648,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#124-128" title="Go to source code"><var>$notifications</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#133-137" title="Go to source code"><var>$notifications</var></a>
 
 			<div class="description short">
 				<p>Notifications to send</p>
@@ -902,7 +1673,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#130-134" title="Go to source code"><var>$comments</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#139-143" title="Go to source code"><var>$comments</var></a>
 
 			<div class="description short">
 				<p>Comments attached to the Logentry</p>
@@ -927,7 +1698,7 @@ Must be valid terms from the tags vocabulary</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Jlab.Eloglib.Logentry.html#136-139" title="Go to source code"><var>$revision_reason</var></a>
+				<a href="source-class-Jlab.Eloglib.Logentry.html#145-148" title="Go to source code"><var>$revision_reason</var></a>
 
 			<div class="description short">
 				<p>Text to log as reason for a new revision</p>
