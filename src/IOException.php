@@ -8,7 +8,11 @@
 
 namespace Jlab\Eloglib;
 
-
+/**
+ * An Exception that results during Input or Output operations with the File System.
+ *
+ * @package Jlab\Eloglib
+ */
 class IOException extends \Exception
 {
 

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use DOMDocument;
+use Jlab\Eloglib\LogentryUtil;
 use PHPUnit\Framework\TestCase;
 
 use Jlab\Eloglib\Logentry;
@@ -60,7 +61,7 @@ class LogentryTest extends TestCase
         // The following code/assertions depend on the default .env file in the source directory
         // after loading, its contents should be accessible via getenv()
         $entry = new Logentry('test', 'TLOG');
-        $this->expectException('Jlab\Eloglib\LogRuntimeException');
+        $this->expectException('Jlab\Eloglib\LogentryException');
         $entry->setConfig('/', 'noSuchFile.env');
     }
 
@@ -181,7 +182,7 @@ class LogentryTest extends TestCase
         $this->assertEmpty($entry->bodyType);
         $entry->setBody('This is the body');
         $this->assertEquals('This is the body', $entry->body);
-        $this->assertEquals('plain_text', $entry->bodyType);
+        $this->assertEquals('text', $entry->bodyType);
 
         $entry->setBody('Now this is the body', 'full_html');
         $this->assertEquals('Now this is the body', $entry->body);
@@ -222,7 +223,7 @@ class LogentryTest extends TestCase
 
         $xmlString = $entry->getXML();
 
-        var_dump($xmlString);
+        //var_dump($xmlString);
         //file_put_contents('/tmp/foobar',$xmlString);
         //die;
 
@@ -241,6 +242,27 @@ class LogentryTest extends TestCase
 
     }
 
+    function test_it_throws_if_submits_invalid_xml(){
+        $entry = new Logentry('test', 'NOSUCHLOG');
+        $this->expectException('Jlab\Eloglib\InvalidXMLException');
+        $lognumber = $entry->submit();
+
+    }
+
+    function test_it_throws_if_queues_invalid_xml(){
+        $entry = new Logentry('test', 'NOSUCHLOG');
+        $this->expectException('Jlab\Eloglib\InvalidXMLException');
+        $lognumber = $entry->queue();
+    }
+
+    function test_it_submits_minimal_valid_test_entry(){
+
+        $entry = new Logentry('test', 'TLOG');
+        $lognumber = $entry->submit();
+        $this->assertTrue(is_numeric($lognumber));
+        $this->assertGreaterThan(0,$lognumber);
+
+    }
 
 }
 

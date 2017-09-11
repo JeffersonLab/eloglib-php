@@ -42,6 +42,7 @@
 				<li><a href="class-Jlab.Eloglib.Attachment.html">Attachment</a></li>
 				<li><a href="class-Jlab.Eloglib.FileAttachment.html">FileAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.Logentry.html">Logentry</a></li>
+				<li><a href="class-Jlab.Eloglib.LogentryUtil.html">LogentryUtil</a></li>
 				<li><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></li>
 				<li><a href="class-Jlab.Eloglib.User.html">User</a></li>
 			</ul>
@@ -50,9 +51,11 @@
 
 			<h3>Exceptions</h3>
 			<ul>
+				<li><a href="class-Jlab.Eloglib.InvalidXMLException.html">InvalidXMLException</a></li>
 				<li><a href="class-Jlab.Eloglib.IOException.html">IOException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></li>
 				<li><a href="class-Jlab.Eloglib.LogRuntimeException.html">LogRuntimeException</a></li>
+				<li><a href="class-Jlab.Eloglib.ServerException.html">ServerException</a></li>
 				<li><a href="class-Jlab.Eloglib.UserException.html">UserException</a></li>
 			</ul>
 
@@ -107,6 +110,10 @@
 	<td>Class Logentry</td>
 </tr>
 <tr>
+	<td class="name"><a href="class-Jlab.Eloglib.LogentryUtil.html">LogentryUtil</a></td>
+	<td></td>
+</tr>
+<tr>
 	<td class="name"><a href="class-Jlab.Eloglib.URLAttachment.html">URLAttachment</a></td>
 	<td>Class Attachment</td>
 </tr>
@@ -121,16 +128,28 @@
 <table class="summary" id="exceptions">
 <caption>Exceptions summary</caption>
 <tr>
+	<td class="name"><a href="class-Jlab.Eloglib.InvalidXMLException.html">InvalidXMLException</a></td>
+	<td>An Exception that indicates the XML of a Logentry fails schema validation.</td>
+</tr>
+<tr>
 	<td class="name"><a href="class-Jlab.Eloglib.IOException.html">IOException</a></td>
-	<td></td>
+	<td>An Exception that results during Input or Output operations with the File System.</td>
 </tr>
 <tr>
 	<td class="name"><a href="class-Jlab.Eloglib.LogentryException.html">LogentryException</a></td>
-	<td>Config</td>
+	<td><p>An Exception that  that indicates a problem outside the control of the Logentry package,
+such as a missing or invalid configuration parameter.</p></td>
 </tr>
 <tr>
 	<td class="name"><a href="class-Jlab.Eloglib.LogRuntimeException.html">LogRuntimeException</a></td>
-	<td>Config</td>
+	<td><p>An Exception that  that indicates a problem outside the control of the client using the software package/library,
+such as a bug in the client API implementation. This RuntimeException indicates a problem that is not recoverable
+within the package,</p></td>
+</tr>
+<tr>
+	<td class="name"><a href="class-Jlab.Eloglib.ServerException.html">ServerException</a></td>
+	<td><p>An Exception that results from attempting to communicate with the Logbooks server
+or an error message was returned by the server.</p></td>
 </tr>
 <tr>
 	<td class="name"><a href="class-Jlab.Eloglib.UserException.html">UserException</a></td>
@@ -147,6 +166,6 @@
 </div>
 </div>
 <script src="resources/combined.js?cd021bc814832c24a7cec5319ea03335bfba1caf"></script>
-<script src="elementlist.js?b15295f771c5df206218d6d1c8ec46bffebb22ea"></script>
+<script src="elementlist.js?da68eb74c15354afb8bb7cc013f3dbbe3ddbf00d"></script>
 </body>
 </html>

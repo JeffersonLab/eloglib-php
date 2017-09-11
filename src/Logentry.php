@@ -6,7 +6,7 @@
 namespace Jlab\Eloglib;
 
 use Dotenv\Dotenv;
-use XMLWriter;
+use \XMLWriter;
 
 /**
  * Class Logentry
@@ -48,7 +48,7 @@ class Logentry
 
     /**
      * The author of the logentry
-     * @var stdClass
+     * @var \stdClass
      */
     protected $author;
 
@@ -153,14 +153,14 @@ class Logentry
      *
      * For maximum flexibility, the constructor can accept any of
      * the following arguments:
-     *   1) A DOMDocument or DOMElement object in Logentry.xsd format
-     *   2) The name of an XML file in Logentry.xsd format
-     *   3) A title and the name of a logbook (e.g. ELOG, TLOG, etc.)
-     *   4) A title and an array of logbook names
-     *   5) A StdClass object with Drupal 7 node fields and elog module fields
-     *
-     * @see https://logbooks.jlab.org/schema/Logentry.xsd
-     * @see https://github.com/JeffersonLab/elog
+     * <ol>
+     *   <li> A DOMDocument or DOMElement object in Logentry.xsd format </li>
+     *   <li> The name of an XML file in Logentry.xsd format </li>
+     *   <li> A title and the name of a logbook (e.g. ELOG, TLOG, etc.) </li>
+     *   <li> A title and an array of logbook names </li>
+     * </ol>
+     * @link https://logbooks.jlab.org/schema/Logentry.xsd
+     * @link https://github.com/JeffersonLab/elog
      */
     public function __construct()
     {
@@ -169,7 +169,7 @@ class Logentry
             throw new LogentryException("Invalid arguments");
         }
 
-//        if (count($args) == 1) {
+        if (count($args) == 1) {
 //            if (is_a($args[0], 'DOMDocument')) {
 //                $this->constructFromDom($args[0]);
 //            } elseif (is_a($args[0], 'DOMElement')) {
@@ -180,162 +180,21 @@ class Logentry
 //                $this->constructFromDom($dom);
 //            } elseif (is_a($args[0], 'Elog')) {
 //                $this->constructFromElog($args[0]);
-//            } elseif (is_a($args[0], 'StdClass')) {
-//                $this->constructFromNode($args[0]);
 //            }
-//        } elseif (count($args) == 2) {
-        if (is_a($args[0], 'StdClass')) {
-            $this->constructFromNode($args[0], $args[1]);
-        } elseif (is_string($args[0])) {
-            $this->constructFromScratch($args[0], $args[1]);
+        } elseif (count($args) == 2) {
+            if (is_string($args[0])) {
+                $this->constructFromScratch($args[0], $args[1]);
+            }
         }
-//        }
 
         $this->setConfig(__DIR__, '.env');
     }
 
     /**
-     * Constructs a Logentry from a Drupal node object.
-     * @param type stdClass $node
-     * @todo incorporate Comments
-     */
-    public function constructFromNode($node, $att_encode = 'url')
-    {
-        //mypr($node);
-        //var_dump($node);
-
-//        $this->setTitle($node->title);
-//        $this->setSticky($node->sticky);
-//        if ($node->body) {
-//            $this->setBody($node->body[$node->language][0]['value'], $node->body[$node->language][0]['format']);
-//        }
-//        $this->setCreated($node->created);
-//        $this->setLognumber($node->field_lognumber[$node->language][0]['value']);
-//        // Find the author
-//        $user = user_load($node->uid);
-//        $this->setAuthor($user->name);
-//        foreach ($node->field_logbook[$node->language] as $arr) {
-//            $term = taxonomy_term_load($arr['tid']);
-//            $this->addLogbook($term->name);
-//        }
-//        if ($node->field_entrymakers) {
-//            foreach ($node->field_entrymakers[$node->language] as $arr) {
-//                $this->addEntrymaker($arr['value']);
-//            }
-//        }
-//        if ($node->field_references) {
-//            foreach ($node->field_references[$node->language] as $arr) {
-//                if ($arr['value'] > FIRST_LOGNUMBER) {
-//                    //current logbook
-//                    $this->addReference('logbook', $arr['value']);
-//                } else {
-//                    //legacy elog
-//                    $this->addReference('elog', $arr['value']);
-//                }
-//            }
-//        }
-//        if (isset($node->field_extern_ref)){
-//            if ($node->field_extern_ref) {
-//                foreach ($node->field_extern_ref[$node->language] as $delta => $arr) {
-//                    foreach ($arr as $ref_name => $ref_value) {
-//                        $this->addReference($arr['ref_name'], $arr['ref_id']);
-//                    }
-//                }
-//            }
-//        }
-//        if ($node->field_tags) {
-//            foreach ($node->field_tags[$node->language] as $arr) {
-//                $term = taxonomy_term_load($arr['tid']);
-//                $this->addTag($term->name);
-//            }
-//        }
-//        // Drupal stores images and files separately, but to the
-//        // elog API, they're both just "attachments
-//        if ($node->field_image) {
-//            foreach ($node->field_image[$node->language] as $arr) {
-//                if (stristr($arr['uri'], 'public:/') && $att_encode != 'base64') {
-//                    //$url = str_replace('public:/',$GLOBALS['base_url']."/files", $arr['uri']);
-//                    $url = file_create_url($arr['uri']);
-//                    $this->addAttachmentURL($url, $arr['title'], $arr['filemime']);
-//                } else {
-//                    $file = drupal_realpath($arr['uri']);
-//                    $this->addAttachment($file, $arr['title'], $arr['filemime']);
-//                }
-//            }
-//        }
-//        if ($node->field_attach) {
-//            foreach ($node->field_attach[$node->language] as $arr) {
-//                if (stristr($arr['uri'], 'public:/') && $att_encode != 'base64') {
-//                    //$url = str_replace('public:/',$GLOBALS['base_url']."/files", $arr['uri']);
-//                    $url = file_create_url($arr['uri']);
-//                    $this->addAttachmentURL($url, $arr['description'], $arr['filemime']);
-//                } else {
-//                    $file = drupal_realpath($arr['uri']);
-//                    $this->addAttachment($file, $arr['description'], $arr['filemime']);
-//                }
-//            }
-//        }
-//        if (isset($node->field_opspr)){
-//            if ($node->field_opspr) {
-//                foreach ($node->field_opspr[$node->language] as $arr) {
-//                    $pr = new stdClass();
-//                    foreach ($arr as $k => $v) {
-//                        $pr->$k = $v;
-//                    }
-//                    $this->opspr_events[] = $pr;
-//                }
-//            }
-//        }
-//        if (isset($node->field_downtime)){
-//            if ($node->field_downtime) {
-//                $this->downtime = $node->field_downtime[$node->language];
-//            }
-//        }
-//
-//        if (! empty($node->problem_report)){
-//            $this->pr = $node->problem_report;
-//        }
-//        // Fetch the Comments (if any)
-//        $cids = comment_get_thread($node, COMMENT_MODE_FLAT, 1000);
-//        if (count($cids) > 0) {
-//            foreach ($cids as $cid) {
-//                $node_comment = comment_load($cid);
-//                //var_dump($node_comment);
-//                $lang = $node_comment->language;
-//                //print "1:".$this->lognumber."\n";
-//                //print "2:".$node_comment->comment_body[$lang][0]['value']."\n";
-//                $C = new Comment($this->lognumber, $node_comment->comment_body[$lang][0]['value']);
-//                $C->setAuthor($node_comment->name);   // Username of comment creator
-//                $C->setTitle($node_comment->subject);
-//                $C->setCreated($node_comment->created);
-//                //@see https://drupal.stackexchange.com/questions/56487/how-do-i-get-the-path-for-public
-//                $publicPath = $this->publicPath();
-//
-//                if (isset($node_comment->field_image) && $node_comment->field_image) {
-//                    foreach ($node_comment->field_image[$node_comment->language] as $arr) {
-//                        $file = str_replace('public:/', $publicPath, $arr['uri']);
-//                        if (file_exists($file)) {
-//                            $C->addAttachment($file, $arr['title'], $arr['filemime']);
-//                        }
-//                    }
-//                }
-//                if (isset($node_comment->field_attach) && $node_comment->field_attach) {
-//                    foreach ($node_comment->field_attach[$node_comment->language] as $arr) {
-//                        $file = str_replace('public:/', $publicPath, $arr['uri']);
-//                        if (file_exists($file)) {
-//                            $C->addAttachment($file, $arr['title'], $arr['filemime']);
-//                        }
-//                    }
-//                }
-//                //var_dump($C);
-//                $this->comments[] = $C;
-//            }
-//        }
-        //mypr($this);
-    }
-
-    /**
-     * Minimal initialization constructor.
+     * Minimal initialization private constructor.
+     *
+     * Automatically sets the created and author fields based
+     * on the system clock and os username respectively.
      *
      * @param $title
      * @param $logbooks
@@ -349,8 +208,10 @@ class Logentry
     }
 
     /**
-     * Sets the title
-     * Limited to 255 characters.
+     * Sets the title.
+     *
+     * The title is limited to max 255 characters.
+     *
      * @param string $title
      * @throws LogentryException
      */
@@ -367,7 +228,6 @@ class Logentry
      * Sets the logbook(s) to which entry belongs
      *
      * @param mixed $logbooks (logbook name or array of logbook names)
-     * @throws LogentryException
      */
     public function setLogbooks($logbooks)
     {
@@ -379,10 +239,11 @@ class Logentry
     }
 
     /**
-     * Adds a logbook association
+     * Adds a logbook to the list of logbooks for the entry.
+     *
      * @param string $logbook
      *
-     * @see https://logbooks.jlab.org/logbooks
+     * @link https://logbooks.jlab.org/logbooks
      */
     public function addLogbook($logbook)
     {
@@ -390,8 +251,11 @@ class Logentry
         $this->logbooks[$key] = $logbook;
     }
 
+
     /**
-     * Sets the internal timestamp of the entry to be astring in ISO 8601 date format
+     * Sets the internal timestamp of the entry.
+     *
+     * Stores it as string in ISO 8601 date format
      *   ex: 2004-02-12T15:19:21+00:00
      *
      * @param mixed $date unix integer timestamp or string parsable by php strtotime()
@@ -428,12 +292,14 @@ class Logentry
 
     /**
      * Loads configuration from a .env file.
+     *
      * Defaults to the .env file included with the package.
+     * Throws if required environment variables are not set.
      *
      * @param string $dir
      * @param string $file
      * @param bool $overload whether config file should replace existing settings (def: FALSE)
-     * @throws LogRuntimeException
+     * @throws LogentryException if required environment variables not present
      */
     function setConfig($dir, $file, $overload = false)
     {
@@ -448,11 +314,13 @@ class Logentry
             $this->config->required(array(
                 'LOG_ENTRY_SCHEMA_URL',
                 'SUBMIT_URL',
+                'ELOGCERT_FILE',
                 'DEFAULT_UNIX_QUEUE_PATH',
+                'DEFAULT_WINDOWS_QUEUE_PATH',
                 'EMAIL_DOMAIN'
             ));
         } catch (\Exception $e) {
-            throw new LogRuntimeException($e->getMessage());
+            throw new LogentryException($e->getMessage());
         }
     }
 
@@ -503,7 +371,7 @@ class Logentry
      * Adds a tag from the tags vocabulary
      *
      * @param string $tag
-     * @see https://logbooks.jlab.org/tags
+     * @link https://logbooks.jlab.org/tags
      */
     public function addTag($tag)
     {
@@ -514,18 +382,26 @@ class Logentry
     }
 
     /**
-     * sets the body
+     * Sets the body and its content type.
+     *
      * @param string $text The content to place in the body
-     * @param string $type Specifies the formatting of text: full_html, filtered_html, plain_text (the default)
+     * @param string $type Specifies the formatting of text: text|html
      */
-    public function setBody($text, $type = 'plain_text')
+    public function setBody($text, $type = 'text')
     {
         $this->body = $text;
         $this->bodyType = $type;
     }
 
     /**
-     * sets the lognumber
+     * sets the lognumber.
+     *
+     * The lognumber will generally be set only when a logentry is retrieved from the
+     * logbook server, not during creation of a new entry.
+     *
+     * The server will reject submissions of new entries with non-null lognumber except from
+     * a small set of privileged users.  Those users would typically specify the lognumber
+     * for a new entry only in situations such as importing legacy data.
      *
      * @param integer $num
      */
@@ -551,6 +427,7 @@ class Logentry
         $this->attachments[] = new FileAttachment($filename, $caption, $type);
     }
 
+
     /**
      * Adds an attachment as a URL reference.
      *
@@ -564,12 +441,13 @@ class Logentry
         $this->attachments[] = new URLAttachment($url, $caption, $type);
     }
 
+
     /**
-     * Return Logentry object as an XML DOMDocument
+     * Return Logentry object as an XML text string
      *
-     * @param string $name A name to use for the DOMElement.
-     *
+     * @param string $name A name to use for the encompassing XML tag.
      * @return string
+     * @todo Comment, PR, Downtime
      */
     function getXML($name = 'Logentry')
     {
@@ -642,30 +520,54 @@ class Logentry
     }
 
 
-    protected function xmlWriteLognumber(xmlWriter $xw)
+    /**
+     * Write the lognumber to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteLognumber(\xmlWriter $xw)
     {
         if ($this->lognumber){
             $xw->writeElement('lognumber', $this->lognumber);
         }
     }
 
-    protected function xmlWriteTitle(xmlWriter $xw)
+    /**
+     * Write the title to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteTitle(\xmlWriter $xw)
     {
         $xw->writeElement('title', $this->title);
     }
 
-    protected function xmlWriteCreated(xmlWriter $xw)
+    /**
+     * Write the created timestamp to XML.
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteCreated(\xmlWriter $xw)
     {
         $xw->writeElement('created', $this->created);
     }
 
 
-    protected function xmlWriteAuthor(xmlWriter $xw)
+    /**
+     * Write the author timestamp to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteAuthor(\xmlWriter $xw)
     {
         $xw->writeRaw($this->author->getXML('Author'));
     }
 
-    protected function xmlWriteLogbooks(xmlWriter $xw)
+    /**
+     * Write the logbook names to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteLogbooks(\xmlWriter $xw)
     {
         $xw->startElement('Logbooks');
         foreach ($this->logbooks as $logbook) {
@@ -674,7 +576,12 @@ class Logentry
         $xw->endElement();
     }
 
-    protected function xmlWriteTags(xmlWriter $xw)
+    /**
+     * Write the tag names to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteTags(\xmlWriter $xw)
     {
         if (count($this->tags) > 0) {
             $xw->startElement('Tags');
@@ -685,7 +592,12 @@ class Logentry
         }
     }
 
-    protected function xmlWriteEntrymakers(xmlWriter $xw)
+    /**
+     * Write the entrymakers to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteEntrymakers(\xmlWriter $xw)
     {
         if (count($this->entrymakers) > 0) {
             $xw->startElement('Entrymakers');
@@ -696,7 +608,12 @@ class Logentry
         }
     }
 
-    protected function xmlWriteBody(xmlWriter $xw)
+    /**
+     * Write the body content and type to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteBody(\xmlWriter $xw)
     {
         if ($this->body != '') {
             $xw->startElement('body');
@@ -717,7 +634,12 @@ class Logentry
         }
     }
 
-    protected function xmlWriteNotifications(xmlWriter $xw)
+    /**
+     * Write the email notification recipients to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteNotifications(\xmlWriter $xw)
     {
         if (count($this->notifications) > 0) {
             $xw->startElement('Notifications');
@@ -728,7 +650,12 @@ class Logentry
         }
     }
 
-    protected function xmlWriteReferences(xmlWriter $xw)
+    /**
+     * Write the external data references to XML.
+     *
+     * @param \xmlWriter $xw
+     */
+    protected function xmlWriteReferences(\xmlWriter $xw)
     {
         if (count($this->references) > 0) {
             $xw->startElement('References');
@@ -744,7 +671,81 @@ class Logentry
         }
     }
 
-    protected function xmlWriteAttachments(xmlWriter $xw){
+    /**
+     * Submit the log item using the queue mechanism as a fallback and return the log number.
+     *
+     * If the log number is zero then the submission was queued instead of being consumed directly by the server.
+     * You can use the whyQueued method to obtain the ServerException encountered if any while attempting
+     * to submit directly to the server.
+     *
+     * @return int The log number, zero means queued
+     * @throws LogentryException
+     */
+    public function submit(){
+        // First attempt is to submit the entry and get back immediate
+        // confirmation in the form of the log number assigned.
+        try {
+            return $this->submitNow();
+        } catch ( ServerException $e){
+            error_log($e->getMessage());
+        }
+
+        // Then fall back and attempt queueing instead.
+        // Pass false to second parameter to prevent second redundant
+        // XML validation attempt.
+        $queueFile = LogentryUtil::saveToQueue($this, false);
+        if (file_exists($queueFile)){
+            return 0;
+        }
+    }
+
+    /**
+     * Submit the log item using the queue mechanism only.
+     *
+     * @return mixed the filename that was queued or false for failure.
+     * @throws IOException if unable to write queue file
+     * @throws InvalidXMLException
+     */
+    public function queue(){
+        $queueFile = LogentryUtil::saveToQueue($this);
+        if (file_exists($queueFile)){
+            return $queueFile;
+        }
+        return false;
+    }
+
+    /**
+     * Submit the log item using only the direct submission method with no queue fallback.
+     *
+     * If an error occurs during submission then an Exception will be thrown
+     * instead of falling back to the queue method.
+     *
+     * @return integer The log number
+     * @throws
+     */
+    public function submitNow(){
+        if (! LogentryUtil::isValidEntry($this)){
+            throw new InvalidXMLException("Schema validation of the entry fails: \n" . LogentryUtil::validationErrors());
+        }
+        return LogentryUtil::saveToServer($this);
+    }
+
+    /**
+     * Return the ServerException which prevented direct submission to the server on the most recent attempt, or null if none.
+     *
+     * This method allows access to the exception which is masked when the submit method is called and returns
+     * with a zero value indicating the submission was queued.
+     */
+    public function whyQueued(){
+        //TODO implement method
+    }
+
+    /**
+     * Write the attachments to XML.
+     *
+     * @param XMLWriter $xw
+     */
+    protected function xmlWriteAttachments(\xmlWriter $xw){
         if (count($this->attachments) > 0) {
             $xw->startElement('Attachments');
             foreach ($this->attachments as $attachment) {
@@ -755,7 +756,7 @@ class Logentry
     }
 
     /**
-     * Magic method allows controlled access to class properties.
+     * Magic method controls access to class properties.
      *
      * @param string $var
      * @return mixed
@@ -763,7 +764,12 @@ class Logentry
     function __get($var)
     {
         if (property_exists($this, $var)) {
-            return $this->$var;
+            $getterFunction = 'get' . ucfirst($var);
+            if (method_exists($this, $getterFunction)) {
+                return $this->$getterFunction();
+            } else {
+                return $this->$var;
+            }
         }
 
         $trace = debug_backtrace();
