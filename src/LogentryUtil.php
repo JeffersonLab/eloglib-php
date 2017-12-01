@@ -11,6 +11,7 @@ namespace Jlab\Eloglib;
 
 use DOMDocument;
 use DOMXPath;
+use stdClass;
 
 class LogentryUtil
 {
@@ -175,7 +176,7 @@ class LogentryUtil
      *
      * @return mixed string or null
      */
-    function userHome()
+    public static function userHome()
     {
         // getenv('HOME') isn't set on Windows and generates a Notice.
         $home = getenv('HOME');
@@ -195,28 +196,27 @@ class LogentryUtil
     /**
      * Extracts and returns the log number out of an XML-formatted server response.
      *
-     * @param string $text - XML server response
+     * @internal
+     * Example success response:
+     *
+     * <Response stat="ok">
+     *   <msg>Entry saved.</msg>
+     *   <lognumber>3484070</lognumber>
+     *   <url>https://logbooks.jlab.org/entry/3484070</url>
+     *  </Response>
+     *
+     * Example error response:
+     *
+     * <Response stat="fail">
+     *   <msg>an error occurred...</msg>
+     * </Response>
+     *
+     * @param string $text XML server response
      * @return integer
      * @throws ServerException
      */
     public static function extractLognumber($text)
     {
-        /*
-         * Example success response:
-         *
-         * <Response stat="ok">
-         *   <msg>Entry saved.</msg>
-         *   <lognumber>3484070</lognumber>
-         *   <url>https://logbooks.jlab.org/entry/3484070</url>
-         *  </Response>
-         *
-         * Example error response:
-         *
-         * <Response stat="fail">
-         *   <msg>an error occurred...</msg>
-         * </Response>
-         */
-
         $dom = new DOMDocument();
         if (!$dom->loadXML($text)) {
             throw new ServerException("Unable to process server response: \n" . $text);
