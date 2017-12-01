@@ -672,9 +672,25 @@ class Logentry
     }
 
     /**
-     * Submit the log item using the queue mechanism as a fallback and return the log number.
+     * Write the attachments to XML.
      *
-     * If the log number is zero then the submission was queued instead of being consumed directly by the server.
+     * @param XMLWriter $xw
+     */
+    protected function xmlWriteAttachments(\xmlWriter $xw){
+        if (count($this->attachments) > 0) {
+            $xw->startElement('Attachments');
+            foreach ($this->attachments as $attachment) {
+                $xw->writeRaw($attachment->getXML('Attachment'));
+            }
+            $xw->endElement();
+        }
+    }
+
+    /**
+     * Submit the log item directly to the server and return the assigned log number, but
+     * fall back to use the queue mechanism as plan B.
+     *
+     * If the log number returned is zero it indicates the submission was queued instead of being accepted by the server.
      * You can use the whyQueued method to obtain the ServerException encountered if any while attempting
      * to submit directly to the server.
      *
@@ -740,20 +756,7 @@ class Logentry
         //TODO implement method
     }
 
-    /**
-     * Write the attachments to XML.
-     *
-     * @param XMLWriter $xw
-     */
-    protected function xmlWriteAttachments(\xmlWriter $xw){
-        if (count($this->attachments) > 0) {
-            $xw->startElement('Attachments');
-            foreach ($this->attachments as $attachment) {
-                $xw->writeRaw($attachment->getXML('Attachment'));
-            }
-            $xw->endElement();
-        }
-    }
+
 
     /**
      * Magic method controls access to class properties.
