@@ -28,6 +28,13 @@ class FileAttachment extends Attachment
         $this->caption = $caption;
     }
 
+    /**
+     * Reads contents of a file to $this->data and stores
+     * the base filename in $this->filename.
+     *
+     * @param $filename
+     * @throws IOException
+     */
     protected function readFromFile($filename){
         $data = file_get_contents($filename);
         if ($data === false) {
@@ -35,18 +42,6 @@ class FileAttachment extends Attachment
         }
         $this->data = base64_encode($data);
         $this->filename =  basename($filename);
-    }
-
-    /**
-     * Returns the caption text if set. Otherwise returns the base filename
-     * of the attachment
-     */
-    function getCaption(){
-      if ($this->caption) {
-          return $this->caption;
-      }else{
-          return basename($this->filename);
-      }
     }
 
     /**

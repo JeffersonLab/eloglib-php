@@ -118,7 +118,7 @@
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Attachment.html#13-122" title="Go to source code">Attachment.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Attachment.html#13-134" title="Go to source code">Attachment.php</a>
 		<br>
 	</div>
 
@@ -151,7 +151,7 @@
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$name</var></dt>
-					<dd>A name to use for the DOMElement.</dd>
+					<dd>A name to use for the DOMElement being returned.</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -177,16 +177,21 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_xmlWriteData">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Attachment.html#76-81" title="Go to source code">xmlWriteData</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Attachment.html#76-85" title="Go to source code">xmlWriteData</a>( <span>Jlab\Eloglib\xmlWriter <var>$xw</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Write the data and its encoding attribute to XML.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Write the data and its encoding attribute to XML.</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$xw</var></dt>
+					<dd></dd>
+				</dl></div>
 
 
 
@@ -207,21 +212,28 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCaption">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Attachment.html#83-94" title="Go to source code">getCaption</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Attachment.html#88-104" title="Go to source code">getCaption</a>( )</code>
 
 		<div class="description short">
-			<p>Returns the caption text if set. Otherwise returns the base filename
-of the attachment</p>
+			<p>Returns the caption text if it is set, or the base filename
+of the attachment if it is not.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Returns the caption text if set. Otherwise returns the base filename
-of the attachment</p>
+			<p>Returns the caption text if it is set, or the base filename
+of the attachment if it is not.</p>
+
+<p>This method can be called explicitly, but is also an interceptor method
+that will get invoked when a client reads $this->caption variable.</p>
 
 
 
 
 
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-Jlab.Eloglib.Attachment.html#___get">Jlab\Eloglib\Attachment::__get()</a></code><br>
+				</div>
 
 
 		</div>
@@ -239,14 +251,18 @@ of the attachment</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___get">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Attachment.html#96-119" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Attachment.html#106-131" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
 
 		<div class="description short">
-			<p>Magic method allows controlled access to class properties.</p>
+			<p>Magic method allows controlled access to class properties
+by checking to see if a "getVariableName()" method exists, and if so,
+invoking it in lieu of direct read of "variableName".</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Magic method allows controlled access to class properties.</p>
+			<p>Magic method allows controlled access to class properties
+by checking to see if a "getVariableName()" method exists, and if so,
+invoking it in lieu of direct read of "variableName".</p>
 
 
 				<h4>Parameters</h4>

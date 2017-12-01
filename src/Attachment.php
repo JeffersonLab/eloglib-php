@@ -55,7 +55,7 @@ abstract class Attachment
     /**
      * Return Attachment object as an XML DOMDocument
      *
-     * @param string $name A name to use for the DOMElement.
+     * @param string $name A name to use for the DOMElement being returned.
      *
      * @return string
      */
@@ -73,6 +73,10 @@ abstract class Attachment
         return $xw->outputMemory(true);
     }
 
+    /**
+     * Write the data and its encoding attribute to XML.
+     * @param \xmlWriter $xw
+     */
     protected function xmlWriteData(xmlWriter $xw){
         $xw->startElement('data');
         $xw->writeAttribute('encoding', $this->encoding);
@@ -80,9 +84,15 @@ abstract class Attachment
         $xw->endElement();
     }
 
+
     /**
-     * Returns the caption text if set. Otherwise returns the base filename
-     * of the attachment
+     * Returns the caption text if it is set, or the base filename
+     * of the attachment if it is not.
+     *
+     * This method can be called explicitly, but is also an interceptor method
+     * that will get invoked when a client reads $this->caption variable.
+     *
+     * @see __get()
      */
     function getCaption()
     {
@@ -94,7 +104,9 @@ abstract class Attachment
     }
 
     /**
-     * Magic method allows controlled access to class properties.
+     * Magic method allows controlled access to class properties
+     * by checking to see if a "getVariableName()" method exists, and if so,
+     * invoking it in lieu of direct read of "variableName".
      *
      * @param string $var
      * @return mixed

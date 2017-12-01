@@ -115,7 +115,7 @@
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Logentry.html#11-784" title="Go to source code">Logentry.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.Logentry.html#11-787" title="Go to source code">Logentry.php</a>
 		<br>
 	</div>
 
@@ -1173,6 +1173,41 @@ for a new entry only in situations such as importing legacy data.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="xmlWriteAttachments" id="_xmlWriteAttachments">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_xmlWriteAttachments">#</a>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#674-687" title="Go to source code">xmlWriteAttachments</a>( <span>xmlWriter <var>$xw</var></span> )</code>
+
+		<div class="description short">
+			<p>Write the attachments to XML.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Write the attachments to XML.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$xw</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="submit" id="_submit">
 
 		<td class="attributes"><code>
@@ -1185,16 +1220,18 @@ for a new entry only in situations such as importing legacy data.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_submit">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#674-700" title="Go to source code">submit</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#689-716" title="Go to source code">submit</a>( )</code>
 
 		<div class="description short">
-			<p>Submit the log item using the queue mechanism as a fallback and return the log number.</p>
+			<p>Submit the log item directly to the server and return the assigned log number, but
+fall back to use the queue mechanism as plan B.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Submit the log item using the queue mechanism as a fallback and return the log number.</p>
+			<p>Submit the log item directly to the server and return the assigned log number, but
+fall back to use the queue mechanism as plan B.</p>
 
-<p>If the log number is zero then the submission was queued instead of being consumed directly by the server.
+<p>If the log number returned is zero it indicates the submission was queued instead of being accepted by the server.
 You can use the whyQueued method to obtain the ServerException encountered if any while attempting
 to submit directly to the server.</p>
 
@@ -1227,7 +1264,7 @@ to submit directly to the server.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_queue">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#702-715" title="Go to source code">queue</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#718-731" title="Go to source code">queue</a>( )</code>
 
 		<div class="description short">
 			<p>Submit the log item using the queue mechanism only.</p>
@@ -1266,7 +1303,7 @@ to submit directly to the server.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_submitNow">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#717-731" title="Go to source code">submitNow</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#733-747" title="Go to source code">submitNow</a>( )</code>
 
 		<div class="description short">
 			<p>Submit the log item using only the direct submission method with no queue fallback.</p>
@@ -1307,7 +1344,7 @@ instead of falling back to the queue method.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_whyQueued">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#733-741" title="Go to source code">whyQueued</a>( )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#749-757" title="Go to source code">whyQueued</a>( )</code>
 
 		<div class="description short">
 			<p>Return the ServerException which prevented direct submission to the server on the most recent attempt, or null if none.</p>
@@ -1328,41 +1365,6 @@ with a zero value indicating the submission was queued.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="xmlWriteAttachments" id="_xmlWriteAttachments">
-
-		<td class="attributes"><code>
-			 protected 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_xmlWriteAttachments">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#743-756" title="Go to source code">xmlWriteAttachments</a>( <span>xmlWriter <var>$xw</var></span> )</code>
-
-		<div class="description short">
-			<p>Write the attachments to XML.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Write the attachments to XML.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$xw</var></dt>
-					<dd></dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="__get" id="___get">
 
 		<td class="attributes"><code>
@@ -1375,7 +1377,7 @@ with a zero value indicating the submission was queued.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___get">#</a>
-		<code><a href="source-class-Jlab.Eloglib.Logentry.html#758-781" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.Logentry.html#761-784" title="Go to source code">__get</a>( <span>string <var>$var</var></span> )</code>
 
 		<div class="description short">
 			<p>Magic method controls access to class properties.</p>

@@ -127,7 +127,7 @@
 		<b>Namespace:</b> <a href="namespace-Jlab.html">Jlab</a>\<a href="namespace-Jlab.Eloglib.html">Eloglib</a><br>
 		<b>Package:</b> Jlab\Eloglib<br>
 
-			<b>Located at</b> <a href="source-class-Jlab.Eloglib.FileAttachment.html#12-68" title="Go to source code">FileAttachment.php</a>
+			<b>Located at</b> <a href="source-class-Jlab.Eloglib.FileAttachment.html#12-63" title="Go to source code">FileAttachment.php</a>
 		<br>
 	</div>
 
@@ -186,54 +186,31 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_readFromFile">#</a>
-		<code><a href="source-class-Jlab.Eloglib.FileAttachment.html#31-38" title="Go to source code">readFromFile</a>( <span> <var>$filename</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.FileAttachment.html#31-45" title="Go to source code">readFromFile</a>( <span> <var>$filename</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Reads contents of a file to $this->data and stores
+the base filename in $this->filename.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Reads contents of a file to $this->data and stores
+the base filename in $this->filename.</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd></dd>
+				</dl></div>
 
 
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-Jlab.Eloglib.IOException.html">Jlab\Eloglib\IOException</a></code>
+				</div>
 
 
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="getCaption" id="_getCaption">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_getCaption">#</a>
-		<code><a href="source-class-Jlab.Eloglib.FileAttachment.html#40-50" title="Go to source code">getCaption</a>( )</code>
-
-		<div class="description short">
-			<p>Returns the caption text if set. Otherwise returns the base filename
-of the attachment</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Returns the caption text if set. Otherwise returns the base filename
-of the attachment</p>
-
-
-
-
-
-
-				<h4>Overrides</h4>
-				<div class="list"><code><a href="class-Jlab.Eloglib.Attachment.html#_getCaption">Jlab\Eloglib\Attachment::getCaption()</a></code></div>
 
 		</div>
 		</div></td>
@@ -250,7 +227,7 @@ of the attachment</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setMimeType">#</a>
-		<code><a href="source-class-Jlab.Eloglib.FileAttachment.html#52-66" title="Go to source code">setMimeType</a>( <span>string <var>$filename</var></span>, <span>mixed <var>$type</var></span> )</code>
+		<code><a href="source-class-Jlab.Eloglib.FileAttachment.html#47-61" title="Go to source code">setMimeType</a>( <span>string <var>$filename</var></span>, <span>mixed <var>$type</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the mime type.</p>
@@ -282,6 +259,7 @@ of the attachment</p>
 	<tr>
 		<td><code>
 			<a href="class-Jlab.Eloglib.Attachment.html#___get">__get()</a>, 
+			<a href="class-Jlab.Eloglib.Attachment.html#_getCaption">getCaption()</a>, 
 			<a href="class-Jlab.Eloglib.Attachment.html#_getXML">getXML()</a>, 
 			<a href="class-Jlab.Eloglib.Attachment.html#_xmlWriteData">xmlWriteData()</a>
 		</code></td>
