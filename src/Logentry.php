@@ -301,15 +301,15 @@ class Logentry
      * @param bool $overload whether config file should replace existing settings (def: FALSE)
      * @throws LogentryException if required environment variables not present
      */
-    function setConfig($dir, $file, $overload = false)
+    function setConfig($dir=".", $file=".env", $overload = false)
     {
         try {
-            $this->config = new Dotenv($dir, $file);
             if ($overload) {
-                $this->config->overload();
+                $this->config = Dotenv::createMutable($dir, $file);
             } else {
-                $this->config->load();
+                $this->config = Dotenv::createImmutable($dir, $file);
             }
+            $this->config->load();
             // Throws if any required env variables are missing
             $this->config->required(array(
                 'LOG_ENTRY_SCHEMA_URL',
