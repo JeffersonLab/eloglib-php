@@ -1,10 +1,9 @@
 {
   "name": "jlab/eloglib-php",
-  "version": "0.0.1",
 
   "require" : {
     "php" : "^5.3 | ^7",
-    "vlucas/phpdotenv": "~2.2"
+    "vlucas/phpdotenv": "~2.2|^5.0"
 
   },
   "require-dev" : {
