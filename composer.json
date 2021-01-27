@@ -1,6 +1,5 @@
 {
   "name": "jlab/eloglib-php",
-  "version": "0.0.1",
 
   "require" : {
     "php" : "^5.3 | ^7",
