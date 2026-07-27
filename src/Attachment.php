@@ -53,6 +53,13 @@ abstract class Attachment
     protected $caption;
 
     /**
+     * Base name of the attached file or URL resource.
+     *
+     * @var string
+     */
+    protected $filename;
+
+    /**
      * Return Attachment object as an XML DOMDocument
      *
      * @param string $name A name to use for the DOMElement being returned.
