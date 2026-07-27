@@ -215,7 +215,8 @@ class LogentryTest extends TestCase
         $entry = new Logentry('test', 'TLOG');
         $xmlString = $entry->getXML();
 
-        $doc = DOMDocument::loadXML($xmlString);
+        $doc = new DOMDocument();
+        $doc->loadXML($xmlString);
         $this->assertEquals(1, $doc->getElementsByTagName('logbook')->length);
         $this->assertEquals('TLOG', $doc->getElementsByTagName('logbook')->item(0)->nodeValue);
         $this->assertEquals('test', $doc->getElementsByTagName('title')->item(0)->nodeValue);
@@ -240,7 +241,8 @@ class LogentryTest extends TestCase
         //file_put_contents('/tmp/foobar',$xmlString);
         //die;
 
-        $doc = DOMDocument::loadXML($xmlString);
+        $doc = new DOMDocument();
+        $doc->loadXML($xmlString);
         $this->assertEquals(1, $doc->getElementsByTagName('title')->length);
         $this->assertEquals(1, $doc->getElementsByTagName('body')->length);
         $this->assertEquals(1, $doc->getElementsByTagName('created')->length);
