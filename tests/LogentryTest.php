@@ -30,9 +30,15 @@ class LogentryTest extends TestCase
 
     function test_it_sets_default_author()
     {
-        $os_user = posix_getpwuid(posix_getuid());
         $entry = new Logentry('test', 'TLOG');
-        $this->assertEquals($os_user['name'], $entry->author->username);
+
+        if (function_exists('posix_getpwuid') && function_exists('posix_getuid')) {
+            $os_user = posix_getpwuid(posix_getuid());
+            $this->assertEquals($os_user['name'], $entry->author->username);
+        } else {
+            // Without ext-posix the author still has to be someone.
+            $this->assertNotEmpty($entry->author->username);
+        }
     }
 
     function test_it_sets_logbooks_from_array()
@@ -49,11 +55,14 @@ class LogentryTest extends TestCase
 
     function test_it_sets_config()
     {
-        // The following code/assertions depend on the default .env file in the source directory
-        // after loading, its contents should be accessible via getenv()
+        // The following assertions depend on the default .env file in the source
+        // directory. Dotenv writes it to $_ENV rather than the process
+        // environment, so it is reached through LogentryUtil::config() rather
+        // than getenv() alone.
+        LogentryUtil::clearDefaultConfig();
         $entry = new Logentry('test', 'TLOG');
-        $this->assertEquals('http://logbooks.jlab.org/schema/Logentry.xsd', getenv('LOG_ENTRY_SCHEMA_URL'));
-        $this->assertEquals('https://logbooks.jlab.org/incoming', getenv('SUBMIT_URL'));
+        $this->assertEquals('http://logbooks.jlab.org/schema/Logentry.xsd', LogentryUtil::config('LOG_ENTRY_SCHEMA_URL'));
+        $this->assertEquals('https://logbooks.jlab.org/incoming', LogentryUtil::config('SUBMIT_URL'));
     }
 
     function test_it_throws_on_bad_config_file()
@@ -68,12 +77,16 @@ class LogentryTest extends TestCase
     function test_it_overrides_config()
     {
         // The default initialization should not override existing env variables
+        LogentryUtil::clearDefaultConfig();
         putenv('SUBMIT_URL=foobar');
         $entry = new Logentry('test', 'TLOG');
-        $this->assertEquals('foobar', getenv('SUBMIT_URL'));
+        $this->assertEquals('foobar', LogentryUtil::config('SUBMIT_URL'));
         // The third param below forces config file to override existing env
         $entry->setConfig(__DIR__ . '/../src', '.env', true);
-        $this->assertEquals('https://logbooks.jlab.org/incoming', getenv('SUBMIT_URL'));
+        $this->assertEquals('https://logbooks.jlab.org/incoming', LogentryUtil::config('SUBMIT_URL'));
+
+        putenv('SUBMIT_URL');
+        LogentryUtil::clearDefaultConfig();
     }
 
     function test_it_adds_entrymaker()

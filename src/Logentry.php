@@ -162,6 +162,47 @@ class Logentry
      * @link https://logbooks.jlab.org/schema/Logentry.xsd
      * @link https://github.com/JeffersonLab/elog
      */
+    /**
+     * Configuration that applies to this entry alone.
+     *
+     * @var array
+     */
+    protected $configOverrides = array();
+
+    /**
+     * Supply configuration for this entry only.
+     *
+     * Takes precedence over LogentryUtil::setDefaultConfig() and over the
+     * environment, so a single entry can be sent somewhere else without
+     * disturbing global state:
+     *
+     *   $entry->withConfig(array('ELOGCERT_FILE' => '/path/to/other.pem'));
+     *
+     * @param array $settings
+     * @return Logentry
+     */
+    public function withConfig(array $settings)
+    {
+        $this->configOverrides = array_merge($this->configOverrides, $settings);
+
+        return $this;
+    }
+
+    /**
+     * Return this entry's override for a setting, or null when it has none.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function configOverride($key)
+    {
+        if (isset($this->configOverrides[$key]) && $this->configOverrides[$key] !== '') {
+            return $this->configOverrides[$key];
+        }
+
+        return null;
+    }
+
     public function __construct()
     {
         $args = func_get_args();
@@ -274,8 +315,40 @@ class Logentry
      */
     protected function setDefaultAuthor()
     {
-        $os_user = posix_getpwuid(posix_getuid());
-        $this->setAuthor($os_user['name']);
+        $this->setAuthor(self::currentSystemUser());
+    }
+
+    /**
+     * The user running the current process.
+     *
+     * Uses ext-posix when it is available and falls back to core PHP otherwise,
+     * so that the extension is not required merely to construct an entry. It is
+     * routinely absent from container images.
+     *
+     * @return string
+     */
+    protected static function currentSystemUser()
+    {
+        if (function_exists('posix_getpwuid') && function_exists('posix_getuid')) {
+            $os_user = posix_getpwuid(posix_getuid());
+            if (is_array($os_user) && isset($os_user['name']) && $os_user['name'] !== '') {
+                return $os_user['name'];
+            }
+        }
+
+        $user = get_current_user();
+        if ($user !== '') {
+            return $user;
+        }
+
+        foreach (array('USER', 'USERNAME', 'LOGNAME') as $key) {
+            $value = LogentryUtil::config($key);
+            if ($value !== null && $value !== '') {
+                return $value;
+            }
+        }
+
+        return 'unknown';
     }
 
     /**
@@ -309,7 +382,19 @@ class Logentry
             } else {
                 $this->config = Dotenv::createImmutable($dir, $file);
             }
-            $this->config->load();
+            $loaded = $this->config->load();
+
+            // Dotenv writes to $_ENV and $_SERVER, never to the process
+            // environment, so a value already set with putenv() would still win
+            // over one loaded here. Promote an explicit overload into the
+            // configuration store, which outranks the environment, so that
+            // $overload keeps meaning what it says.
+            if ($overload && is_array($loaded)) {
+                LogentryUtil::setDefaultConfig(array_filter($loaded, function ($value) {
+                    return $value !== null && $value !== '';
+                }));
+            }
+
             // Throws if any required env variables are missing
             $this->config->required(array(
                 'LOG_ENTRY_SCHEMA_URL',
@@ -346,7 +431,7 @@ class Logentry
     {
         if (is_string($email)) {
             if (!stristr($email, '@')) {
-                $email .= getenv('EMAIL_DOMAIN');
+                $email .= LogentryUtil::config('EMAIL_DOMAIN', '', $this);
             }
             $addr = strtolower($email);
             $this->notifications[$addr] = $email;

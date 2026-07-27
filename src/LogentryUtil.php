@@ -22,6 +22,87 @@ class LogentryUtil
      */
     public static $lastServerMsg;
 
+    /**
+     * Configuration supplied explicitly by the host application.
+     *
+     * @var array
+     */
+    protected static $config = array();
+
+    /**
+     * Supply configuration programmatically.
+     *
+     * Intended for host applications that already hold these settings and
+     * should not have to route them through the process environment. Values
+     * set here take precedence over the environment, and over the .env file
+     * bundled with this package.
+     *
+     *   LogentryUtil::setDefaultConfig(array(
+     *       'SUBMIT_URL'    => 'https://logbooks.jlab.org/incoming',
+     *       'ELOGCERT_FILE' => '/etc/elog/elogcert',
+     *   ));
+     *
+     * @param array $settings
+     * @return void
+     */
+    public static function setDefaultConfig(array $settings)
+    {
+        self::$config = array_merge(self::$config, $settings);
+    }
+
+    /**
+     * Discard configuration previously given to setDefaultConfig().
+     *
+     * @return void
+     */
+    public static function clearDefaultConfig()
+    {
+        self::$config = array();
+    }
+
+    /**
+     * Resolve a configuration value.
+     *
+     * Consulted in order: the entry's own overrides, configuration set with
+     * setDefaultConfig(), the process environment, then $_ENV and $_SERVER.
+     *
+     * Reading from $_ENV and $_SERVER matters: Dotenv writes there rather than
+     * to the process environment, so a value loaded from a .env file -- this
+     * package's own bundled defaults included -- is invisible to getenv() alone.
+     * It is also where frameworks such as Laravel put their configuration.
+     *
+     * @param string $key
+     * @param mixed $default returned when the key is set nowhere
+     * @param Logentry $entry consulted first, when given
+     * @return mixed
+     */
+    public static function config($key, $default = null, Logentry $entry = null)
+    {
+        if ($entry !== null) {
+            $override = $entry->configOverride($key);
+            if ($override !== null) {
+                return $override;
+            }
+        }
+
+        if (isset(self::$config[$key]) && self::$config[$key] !== '') {
+            return self::$config[$key];
+        }
+
+        $value = getenv($key);
+        if ($value !== false && $value !== '') {
+            return $value;
+        }
+
+        foreach (array($_ENV, $_SERVER) as $store) {
+            if (isset($store[$key]) && $store[$key] !== '') {
+                return $store[$key];
+            }
+        }
+
+        return $default;
+    }
+
 
     /**
      * Saves a Logentry object to an XML file
@@ -72,7 +153,7 @@ class LogentryUtil
 
     public static function queuePath()
     {
-        return getenv('DEFAULT_UNIX_QUEUE_PATH');
+        return self::config('DEFAULT_UNIX_QUEUE_PATH');
     }
 
     /**
@@ -82,7 +163,10 @@ class LogentryUtil
      */
     public static function queueFileName()
     {
-        $pid = posix_getpid();
+        // getmypid() is core PHP; posix_getpid() would make ext-posix a
+        // requirement of the direct submission path, which uses this name for
+        // its temp file.
+        $pid = getmypid();
         $hostname = trim(`hostname`);
         $date = date('Ymd');
         $time = date('His');
@@ -108,9 +192,9 @@ class LogentryUtil
 
         $FH = fopen($xmlFile, 'r');
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::submitUrl($xmlFile));
+        curl_setopt($ch, CURLOPT_URL, self::submitUrl($xmlFile, $entry));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);  // cert is self-signed right now
-        curl_setopt($ch, CURLOPT_SSLCERT, self::certificateFile());
+        curl_setopt($ch, CURLOPT_SSLCERT, self::certificateFile($entry));
         curl_setopt($ch, CURLOPT_INFILE, $FH);
         curl_setopt($ch, CURLOPT_INFILESIZE, filesize($xmlFile));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -144,14 +228,14 @@ class LogentryUtil
         return $filename;
     }
 
-    protected static function submitUrl($filename)
+    protected static function submitUrl($filename, Logentry $entry = null)
     {
-        return getenv('SUBMIT_URL') . '/' . urlencode(basename($filename));
+        return self::config('SUBMIT_URL', null, $entry) . '/' . urlencode(basename($filename));
     }
 
-    public static function certificateFile()
+    public static function certificateFile(Logentry $entry = null)
     {
-        $filename = getenv('ELOGCERT_FILE');
+        $filename = self::config('ELOGCERT_FILE', null, $entry);
         if (self::isSimpleFilename($filename)) {
             $filename = self::userHome() . DIRECTORY_SEPARATOR . $filename;
         }
@@ -178,8 +262,9 @@ class LogentryUtil
      */
     public static function userHome()
     {
-        // getenv('HOME') isn't set on Windows and generates a Notice.
-        $home = getenv('HOME');
+        // HOME is often absent from the process environment under a web SAPI
+        // even when $_SERVER carries it, and is not set at all on Windows.
+        $home = self::config('HOME');
         if (!empty($home)) {
             // home should never end with a trailing slash.
             $home = rtrim($home, '/');
@@ -280,7 +365,7 @@ class LogentryUtil
     {
 
         if ($schema == null) {
-            $schema = getenv('LOG_ENTRY_SCHEMA_URL');
+            $schema = self::config('LOG_ENTRY_SCHEMA_URL');
         }
 
         if (!is_readable($filename)) {
